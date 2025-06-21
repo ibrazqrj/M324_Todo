@@ -1,22 +1,34 @@
 package com.example.demo;
 
-/** the simplest task 
- * 
- * @author luh
+/**
+ * Repräsentiert eine einfache Aufgabe mit Beschreibung und Erfassungsdatum.
+ * Muss exakt mit den JSON-Eigenschaften übereinstimmen!
  */
 public class Task {
-	
-	private String taskdescription; // must have the EXACT name as his React state property and may not be ignored!
 
-	public Task() {
+    // Beschreibung der Aufgabe – wird vom Client (React) übergeben
+    private String taskdescription;
+
+    // Erfassungsdatum als String
+    private String createdAt;
+
+    public Task() {
+        // Leerer Konstruktor für Jackson
     }
 
-	public String getTaskdescription() { // do not apply camel-case here! Its a Bean!
-		return taskdescription;
-	}
+    public String getTaskdescription() {
+        return taskdescription;
+    }
 
-	public void setTaskdescription(String taskdescription) { // do not apply camel-case here! Its a Bean!
-		this.taskdescription = taskdescription;
-	}
+    public void setTaskdescription(String taskdescription) {
+        this.taskdescription = taskdescription;
+    }
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
 }
