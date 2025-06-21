@@ -1,0 +1,25 @@
+name: Check for README
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  check-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Check if README.md exists
+      run: |
+        if [ ! -f README.md ]; then
+          echo "README.md fehlt!"
+          exit 1
+        else
+          echo "README.md vorhanden."
+        fi

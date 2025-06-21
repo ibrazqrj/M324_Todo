@@ -1,0 +1,33 @@
+name: Backend Package
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Build Jar Package
+      run: mvn clean package
+
+    - name: Upload Package
+      uses: actions/upload-artifact@v3
+      with:
+        name: backend-jar
+        path: ./backend/target/*.jar
