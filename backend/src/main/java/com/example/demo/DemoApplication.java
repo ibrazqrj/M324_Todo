@@ -30,13 +30,13 @@ public class DemoApplication {
     private final ObjectMapper mapper = new ObjectMapper();
 
     @CrossOrigin
-    @GetMapping("/")
+    @GetMapping("/api/v1/")
     public List<Task> getTasks() {
         return tasks;
     }
 
     @CrossOrigin
-    @PostMapping("/tasks")
+    @PostMapping("/api/v1/tasks")
     public String addTask(@RequestBody String taskJson) {
         try {
 			Task task = mapper.readValue(taskJson, Task.class);
@@ -60,7 +60,7 @@ public class DemoApplication {
     }
 
     @CrossOrigin
-    @PostMapping("/delete")
+    @PostMapping("/api/v1/delete")
     public String deleteTask(@RequestBody String taskJson) {
         try {
             Task task = mapper.readValue(taskJson, Task.class);
@@ -81,7 +81,7 @@ public class DemoApplication {
     }
 
     @CrossOrigin
-    @PostMapping("/watch")
+    @PostMapping("/api/v1/watch")
     public String toggleWatch(@RequestBody String taskJson) {
         try {
             Task incoming = mapper.readValue(taskJson, Task.class);

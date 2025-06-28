@@ -16,7 +16,7 @@ function App() {
     console.log(
       "Sending task description to Spring-Server: " + taskdescription
     );
-    fetch("http://localhost:8080/tasks", {
+    fetch("http://localhost:8080/api/v1/tasks", {
       // API endpoint (the complete URL!) to save a taskdescription
       method: "POST",
       headers: {
@@ -48,7 +48,7 @@ function App() {
    ** It updates the component's state with the fetched todos from the API Endpoint '/'.
    */
   useEffect(() => {
-    fetch("http://localhost:8080/")
+    fetch("http://localhost:8080/api/v1/")
       .then((response) => response.json())
       .then((data) => {
         setTodos(data);
@@ -62,7 +62,7 @@ function App() {
     console.log(
       "Sending task description to delete on Spring-Server: " + taskdescription
     );
-    fetch(`http://localhost:8080/delete`, {
+    fetch(`http://localhost:8080/api/v1/delete`, {
       // API endpoint (the complete URL!) to delete an existing taskdescription in the list
       method: "POST",
       body: JSON.stringify({ taskdescription: taskdescription }),
@@ -83,7 +83,7 @@ function App() {
   const toggleWatch = (todo) => {
     const updated = { ...todo, watched: !todo.watched };
 
-    fetch("http://localhost:8080/watch", {
+    fetch("http://localhost:8080/api/v1/watch", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updated),

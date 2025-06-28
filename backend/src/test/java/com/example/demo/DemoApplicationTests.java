@@ -23,7 +23,7 @@ class DemoApplicationTests {
 
     @Test
     void testGetTasksReturnsEmptyList() throws Exception {
-        mockMvc.perform(get("/"))
+        mockMvc.perform(get("/api/v1/"))
                .andExpect(status().isOk())
                .andExpect(content().json("[]"));
     }
@@ -32,12 +32,12 @@ class DemoApplicationTests {
 	void testAddTaskWithCreatedAt() throws Exception {
 		String taskJson = "{\"taskdescription\":\"Test-Aufgabe\",\"createdAt\":\"2025-06-21\"}";
 
-		mockMvc.perform(post("/tasks")
+		mockMvc.perform(post("/api/v1/tasks")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(taskJson))
 				.andExpect(status().isOk());
 
-		mockMvc.perform(get("/"))
+		mockMvc.perform(get("/api/v1/"))
 				.andExpect(status().isOk())
 				.andExpect(content().json("[{\"taskdescription\":\"Test-Aufgabe\",\"createdAt\":\"2025-06-21\"}]"));
 	}
@@ -51,12 +51,12 @@ class DemoApplicationTests {
 	void testAddEmptyTaskShouldNotBeAdded() throws Exception {
 		String emptyTaskJson = "{\"taskdescription\":\"\", \"createdAt\":\"2025-06-21\"}";
 
-		mockMvc.perform(post("/tasks")
+		mockMvc.perform(post("/api/v1/tasks")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(emptyTaskJson))
 				.andExpect(status().isOk());
 
-		mockMvc.perform(get("/"))
+		mockMvc.perform(get("/api/v1/"))
 				.andExpect(status().isOk())
 				.andExpect(content().json("[]"));
 	}
