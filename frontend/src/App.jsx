@@ -79,7 +79,7 @@ function App() {
   };
 
   /** Is called when the NEU Delete-Button is pressed. It sends a POST request to the API endpoint '/api/v2/delete' 
-   * and updates the component's state with the new todo. */
+   * and updates the component's state with the new todo. CREATED WITH HELP OF CHATGPT*/
   const handleDeleteV2 = (event, taskdescription) => {
     console.log("Lösche Task über /api/v2/delete: " + taskdescription);
     fetch(`http://localhost:8080/api/v2/delete`, {
