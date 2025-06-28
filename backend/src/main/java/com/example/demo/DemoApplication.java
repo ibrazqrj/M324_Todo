@@ -79,4 +79,21 @@ public class DemoApplication {
 
         return "redirect:/";
     }
+
+    @CrossOrigin
+    @PostMapping("/watch")
+    public String toggleWatch(@RequestBody String taskJson) {
+        try {
+            Task incoming = mapper.readValue(taskJson, Task.class);
+            for (Task task : tasks) {
+                if (task.getTaskdescription().equals(incoming.getTaskdescription())) {
+                    task.setWatched(incoming.isWatched());
+                    break;
+                }
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "redirect:/";
+    }
 }
