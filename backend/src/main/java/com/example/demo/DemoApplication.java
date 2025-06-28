@@ -39,13 +39,13 @@ public class DemoApplication {
     @PostMapping("/api/v1/tasks")
     public String addTask(@RequestBody String taskJson) {
         try {
-			Task task = mapper.readValue(taskJson, Task.class);
+            Task task = mapper.readValue(taskJson, Task.class);
 
-			// NEU: Leere Beschreibung verhindern
-			if (task.getTaskdescription() == null || task.getTaskdescription().isBlank()) {
-				return "redirect:/";
-			}
-			
+            // NEU: Leere Beschreibung verhindern
+            if (task.getTaskdescription() == null || task.getTaskdescription().isBlank()) {
+                return "redirect:/";
+            }
+
             // Duplikate vermeiden
             if (tasks.stream().anyMatch(t -> t.getTaskdescription().equals(task.getTaskdescription()))) {
                 return "redirect:/";
@@ -78,6 +78,26 @@ public class DemoApplication {
         }
 
         return "redirect:/";
+    }
+
+    @CrossOrigin
+    @PostMapping("/api/v2/delete")
+    public String deleteTaskV2(@RequestBody String taskJson) {
+        try {
+            Task task = mapper.readValue(taskJson, Task.class);
+
+            boolean removed = tasks.removeIf(t -> t.getTaskdescription().equals(task.getTaskdescription()));
+
+            // NEU: Deutliche Rückmeldung in v2 (z. B. für Frontend-Toast oder Logging)
+            if (removed) {
+                return "Task erfolgreich gelöscht (v2)";
+            } else {
+                return "Task nicht gefunden (v2)";
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "Fehler beim Verarbeiten der Anfrage (v2)";
+        }
     }
 
     @CrossOrigin
