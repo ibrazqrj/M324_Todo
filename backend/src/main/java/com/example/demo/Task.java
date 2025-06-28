@@ -12,6 +12,8 @@ public class Task {
     // Erfassungsdatum als String
     private String createdAt;
 
+    private boolean watched;
+
     public Task() {
         // Leerer Konstruktor für Jackson
     }
@@ -30,5 +32,13 @@ public class Task {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isWatched() {
+        return watched;
+    }
+
+    public void setWatched(boolean watched) {
+        this.watched = watched;
     }
 }

@@ -28,3 +28,12 @@ test('user can type into the input field', () => {
   expect(input.value).toBe('Meine Aufgabe');
 });
 
+test('watch button toggles star icon', async () => {
+  fetch.mockResolvedValueOnce({ json: () => Promise.resolve([{ taskdescription: "Test", watched: false }]) });
+
+  render(<App />);
+  const starButton = await screen.findByText('☆');
+  fireEvent.click(starButton);
+  expect(await screen.findByText('⭐')).toBeInTheDocument();
+});
+
