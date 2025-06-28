@@ -58,7 +58,7 @@ function App() {
   /** Is called when the Done-Button is pressed. It sends a POST request to the API endpoint '/delete' and updates the component's state with the new todo.
    ** In this case if the task with the unique taskdescription is found on the server, it will be removed from the list.
    */
-  const handleDelete = (event, taskdescription) => {
+  const handleDeleteV1 = (event, taskdescription) => {
     console.log(
       "Sending task description to delete on Spring-Server: " + taskdescription
     );
@@ -78,7 +78,26 @@ function App() {
       .catch((error) => console.log(error));
   };
 
-  /** Is called when the Star-Button is pressed. It sends a POST request to the API endpoint 
+  /** Is called when the NEU Delete-Button is pressed. It sends a POST request to the API endpoint '/api/v2/delete' 
+   * and updates the component's state with the new todo. */
+  const handleDeleteV2 = (event, taskdescription) => {
+    console.log("Lösche Task über /api/v2/delete: " + taskdescription);
+    fetch(`http://localhost:8080/api/v2/delete`, {
+      method: "POST",
+      body: JSON.stringify({ taskdescription }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(async (response) => {
+        const msg = await response.text();
+        alert("Antwort von API v2: " + msg);
+        window.location.href = "/";
+      })
+      .catch((error) => console.log(error));
+  };
+
+  /** Is called when the Star-Button is pressed. It sends a POST request to the API endpoint
    * '/watch' and updates the component's state with the new todo. */
   const toggleWatch = (todo) => {
     const updated = { ...todo, watched: !todo.watched };
@@ -114,10 +133,18 @@ function App() {
               {todo.watched ? "⭐" : "☆"}
             </button>
 
+            {/* Löschen v1 */}
             <button
-              onClick={(event) => handleDelete(event, todo.taskdescription)}
+              onClick={(event) => handleDeleteV1(event, todo.taskdescription)}
             >
-              ✔️
+              ✔️ v1
+            </button>
+
+            {/* NEU: Löschen v2 */}
+            <button
+              onClick={(event) => handleDeleteV2(event, todo.taskdescription)}
+            >
+              ❌ v2
             </button>
           </li>
         ))}
